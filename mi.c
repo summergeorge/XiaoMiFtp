@@ -129,6 +129,8 @@ Status IPhead(char* ip)
     last = atoi(strtok(NULL,"."));
     if (last > 10)
         last -= 10;
+    else
+        last = 1;
 
 
     return OK;
