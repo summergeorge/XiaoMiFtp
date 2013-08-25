@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1376223573 source:d:\codeblock\miuiftp\icon.rc
+
+1377238268 source:d:\codeblock\miuiftp\mi.c
+	<winsock2.h>
+	<process.h>
+
