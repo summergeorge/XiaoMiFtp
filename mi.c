@@ -6,9 +6,9 @@
 #define NOTFOUND 0
 #define Status int
 
-/** Ð¡Ã×FTP¶Ë¿Ú2121
-    ¿ªÊ¼²éÕÒµÄip = THREAD_HEAD
-    ²éÑ¯ipµÄÊýÁ¿ = THREAD_NUM
+/** Ð¡ï¿½ï¿½FTPï¿½Ë¿ï¿½2121
+    ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Òµï¿½ip = THREAD_HEAD
+    ï¿½ï¿½Ñ¯ipï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ = THREAD_NUM
 **/
 #define PORT 2121
 #define THREAD_HEAD 100
@@ -16,21 +16,21 @@
 
 int last = 1;
 int flag = THREAD_NUM;
-HANDLE  ThreadEvent; /** ÊÂ¼þ  */
+HANDLE  ThreadEvent; /** ï¿½Â¼ï¿½  */
 
 /**
-**  ²éÕÒ²ÎÊýipµØÖ·µÄPORT¶Ë¿ÚÊÇ·ñ¿ª·Å
-**  ·µ»ØÖµ£ºFOUND; NOTFOUND;
+**  ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ipï¿½ï¿½Ö·ï¿½ï¿½PORTï¿½Ë¿ï¿½ï¿½Ç·ñ¿ª·ï¿½
+**  ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½FOUND; NOTFOUND;
 **/
 Status Search_mi(char* ip)
 {
     WSADATA wsaData;
-    if(0 != WSAStartup(MAKEWORD(2,0),&wsaData)) exit(-1);/** ³õÊ¼»¯ winSocket  */
+    if(0 != WSAStartup(MAKEWORD(2,0),&wsaData)) exit(-1);/** ï¿½ï¿½Ê¼ï¿½ï¿½ winSocket  */
     SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
     SOCKADDR_IN sa;
     sa.sin_addr.s_addr = inet_addr (ip);
 
-    SetEvent(ThreadEvent); /** ´¥·¢ÊÂ¼þ  */
+    SetEvent(ThreadEvent); /** ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½  */
 
     sa.sin_family=AF_INET;
     sa.sin_port = htons(PORT);
@@ -39,11 +39,11 @@ Status Search_mi(char* ip)
     unsigned long ul = 1;
     struct timeval tout;
     fd_set se;
-    ioctlsocket(sock, FIONBIO, &ul); /** ÉèÖÃÎª·Ç×èÈûÄ£Ê½  */
+    ioctlsocket(sock, FIONBIO, &ul); /** ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½  */
     if(connect(sock,(SOCKADDR *)&sa,sizeof(sa))== SOCKET_ERROR)
     {
         tout.tv_sec  = 0;
-        tout.tv_usec = 800*1000;/** 100ºÁÃë;1Ãë == 1000ºÀÃë== 1000Î¢Ãë;  */
+        tout.tv_usec = 800*1000;/** 100ï¿½ï¿½ï¿½ï¿½;1ï¿½ï¿½ == 1000ï¿½ï¿½ï¿½ï¿½== 1000Î¢ï¿½ï¿½;  */
         FD_ZERO(&se);
         FD_SET(sock, &se);
         if( select(sock+1, NULL, &se, NULL, &tout) > 0)
@@ -82,13 +82,13 @@ Status Search_mi(char* ip)
 }
 
 /**
-**  »ñÈ¡±¾»úIPµØÖ·
-**  ·µ»ØÖµ£ºchar* ip;
+**  ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½IPï¿½ï¿½Ö·
+**  ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½char* ip;
 **/
 char* CheckIP(void)
 {
     WSADATA wsaData;
-    char name[255];/** Ö÷»úÃû  */
+    char name[255];/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  */
     char *ip;
 
     PHOSTENT hostinfo;
@@ -97,10 +97,10 @@ char* CheckIP(void)
     {
         if(gethostname(name,sizeof(name)) == 0)
         {
-            /** Èô³É¹¦»ñµÃÖ÷»úÃû£¬Ôò·µ»ØÒ»¸öÖ¸Õë£¬Ö¸Ïòhostinfo */
+            /** ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½Ò»ï¿½ï¿½Ö¸ï¿½ë£¬Ö¸ï¿½ï¿½hostinfo */
             if((hostinfo = gethostbyname(name)) != NULL)
             {
-                /** inet_ntoa()º¯Êý£¬½«hostinfo½á¹¹±äÁ¿ÖÐµÄh_addr_list×ª»¯Îª±ê×¼µÄµã·Ö±íÊ¾µÄIP */
+                /** inet_ntoa()ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½hostinfoï¿½á¹¹ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½h_addr_list×ªï¿½ï¿½Îªï¿½ï¿½×¼ï¿½Äµï¿½ï¿½Ö±ï¿½Ê¾ï¿½ï¿½IP */
                 ip = inet_ntoa(*(struct in_addr *)*hostinfo->h_addr_list);
                 return ip;
             }
@@ -111,8 +111,8 @@ char* CheckIP(void)
 }
 
 /**
-**  »ñÈ¡IPµØÖ·Ç°3¶Î
-**  ·µ»ØÖµ£ºStatus;
+**  ï¿½ï¿½È¡IPï¿½ï¿½Ö·Ç°3ï¿½ï¿½
+**  ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Status;
 **/
 Status IPhead(char* ip)
 {
@@ -124,11 +124,13 @@ Status IPhead(char* ip)
     strcat(ip,strtok (NULL, "."));
     strcat(ip,".");
 
-    /** Èç¹ûµ±Ç°Ö÷»úipµÚËÄ¶ÎÔÚ10ÒÔÄÚ£¬Îª·ÀÖ¹¼õºóÒç³ö£¬Ç¿ÖÆ´Ó***.***.***.1¿ªÊ¼²éÑ¯  **/
+    /** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ipï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½10ï¿½ï¿½ï¿½Ú£ï¿½Îªï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½Æ´ï¿½***.***.***.1ï¿½ï¿½Ê¼ï¿½ï¿½Ñ¯  **/
 
     last = atoi(strtok(NULL,"."));
     if (last > 10)
         last -= 10;
+    else
+        last = 1;    
 
 
     return OK;
@@ -168,7 +170,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 {
     ThreadEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
     char iphead[16] = "";
-    IPhead(iphead);/** »ñÈ¡Íø¹ØIPµØÖ·Ç°3¶Î  */
+    IPhead(iphead);/** ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½IPï¿½ï¿½Ö·Ç°3ï¿½ï¿½  */
     HANDLE  handle[THREAD_NUM];
     int i;
     for(i = 0; i < THREAD_NUM; i++)
@@ -176,18 +178,18 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
         char tmp[4] = "",ip[16] = "";
         strcat(ip,iphead);
         itoa(last  + i,tmp,10);
-        strcat(ip,tmp);/** Æ´½ÓÉÏIPµØÖ·×îºóÒ»¶Î */
+        strcat(ip,tmp);/** Æ´ï¿½ï¿½ï¿½ï¿½IPï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ */
 
-        /** ¿ªTHREAD_NUM¸öÏß³Ì½øÐÐÉ¨Ãè  */
+        /** ï¿½ï¿½THREAD_NUMï¿½ï¿½ï¿½ß³Ì½ï¿½ï¿½ï¿½É¨ï¿½ï¿½  */
         handle[i] = (HANDLE)_beginthreadex(NULL,0,thread_func,ip,0,NULL);
-        WaitForSingleObject(ThreadEvent, INFINITE); /** µÈ´ýÊÂ¼þ±»´¥·¢  */
+        WaitForSingleObject(ThreadEvent, INFINITE); /** ï¿½È´ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  */
     }
     WaitForMultipleObjects(THREAD_NUM, handle, TRUE,INFINITE);
-    CloseHandle(ThreadEvent);/** Ïú»ÙÊÂ¼þ  */
+    CloseHandle(ThreadEvent);/** ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½  */
     if(0 == flag)
     {
-        char notfound[] = "Çë°´ÏÂÃæ·½·¨¼ì²é£º\n\n\t1, ÊÖ»úºÍµçÄÔ Á¬½ÓÍ¬Ò»¸öÂ·ÓÉÆ÷\n\t2, ´ò¿ªÐ¡Ã×ÊÖ»ú -> ÎÄ¼þ¹ÜÀí -> Ô¶³Ì¹ÜÀí -> Æô¶¯·þÎñ";
-        MessageBox(NULL,notfound,TEXT("Ã»ÓÐÕÒµ½Ð¡Ã×ÊÖ»ú£¡"),MB_OK|MB_ICONWARNING);
+        char notfound[] = "ï¿½ë°´ï¿½ï¿½ï¿½æ·½ï¿½ï¿½ï¿½ï¿½ï¿½é£º\n\n\t1, ï¿½Ö»ï¿½ï¿½Íµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½\n\t2, ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Ö»ï¿½ -> ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ -> Ô¶ï¿½Ì¹ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+        MessageBox(NULL,notfound,TEXT("Ã»ï¿½ï¿½ï¿½Òµï¿½Ð¡ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½"),MB_OK|MB_ICONWARNING);
     }
     return 0;
 }
