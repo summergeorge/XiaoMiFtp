@@ -6,15 +6,9 @@
 #define NOTFOUND 0
 #define Status int
 
-<<<<<<< HEAD
-/** С��FTP�˿�2121
-    ��ʼ���ҵ�ip = THREAD_HEAD
-    ��ѯip������ = THREAD_NUM
-=======
 /** 小米FTP端口2121
     开始查找的ip = THREAD_HEAD
     查询ip的数量 = THREAD_NUM
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
 **/
 #define PORT 2121
 #define THREAD_HEAD 100
@@ -22,37 +16,21 @@
 
 int last = 1;
 int flag = THREAD_NUM;
-<<<<<<< HEAD
-HANDLE  ThreadEvent; /** �¼�  */
-
-/**
-**  ���Ҳ���ip��ַ��PORT�˿��Ƿ񿪷�
-**  ����ֵ��FOUND; NOTFOUND;
-=======
 HANDLE  ThreadEvent; /** 事件  */
 
 /**
 **  查找参数ip地址的PORT端口是否开放
 **  返回值：FOUND; NOTFOUND;
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
 **/
 Status Search_mi(char* ip)
 {
     WSADATA wsaData;
-<<<<<<< HEAD
-    if(0 != WSAStartup(MAKEWORD(2,0),&wsaData)) exit(-1);/** ��ʼ�� winSocket  */
-=======
     if(0 != WSAStartup(MAKEWORD(2,0),&wsaData)) exit(-1);/** 初始化 winSocket  */
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
     SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
     SOCKADDR_IN sa;
     sa.sin_addr.s_addr = inet_addr (ip);
 
-<<<<<<< HEAD
-    SetEvent(ThreadEvent); /** �����¼�  */
-=======
     SetEvent(ThreadEvent); /** 触发事件  */
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
 
     sa.sin_family=AF_INET;
     sa.sin_port = htons(PORT);
@@ -61,19 +39,11 @@ Status Search_mi(char* ip)
     unsigned long ul = 1;
     struct timeval tout;
     fd_set se;
-<<<<<<< HEAD
-    ioctlsocket(sock, FIONBIO, &ul); /** ����Ϊ������ģʽ  */
-    if(connect(sock,(SOCKADDR *)&sa,sizeof(sa))== SOCKET_ERROR)
-    {
-        tout.tv_sec  = 0;
-        tout.tv_usec = 800*1000;/** 100����;1�� == 1000����== 1000΢��;  */
-=======
     ioctlsocket(sock, FIONBIO, &ul); /** 设置为非阻塞模式  */
     if(connect(sock,(SOCKADDR *)&sa,sizeof(sa))== SOCKET_ERROR)
     {
         tout.tv_sec  = 0;
         tout.tv_usec = 800*1000;/** 100毫秒;1秒 == 1000豪秒== 1000微秒;  */
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
         FD_ZERO(&se);
         FD_SET(sock, &se);
         if( select(sock+1, NULL, &se, NULL, &tout) > 0)
@@ -111,24 +81,14 @@ Status Search_mi(char* ip)
     }
 }
 
-<<<<<<< HEAD
 /**
-**  ��ȡ����IP��ַ
-**  ����ֵ��char* ip;
-=======
-/** 
 **  获取本机IP地址
 **  返回值：char* ip;
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
 **/
 char* CheckIP(void)
 {
     WSADATA wsaData;
-<<<<<<< HEAD
-    char name[255];/** ������  */
-=======
     char name[255];/** 主机名  */
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
     char *ip;
 
     PHOSTENT hostinfo;
@@ -137,17 +97,10 @@ char* CheckIP(void)
     {
         if(gethostname(name,sizeof(name)) == 0)
         {
-<<<<<<< HEAD
-            /** ���ɹ��������������򷵻�һ��ָ�룬ָ��hostinfo */
-            if((hostinfo = gethostbyname(name)) != NULL)
-            {
-                /** inet_ntoa()��������hostinfo�ṹ�����е�h_addr_listת��Ϊ��׼�ĵ��ֱ�ʾ��IP */
-=======
             /** 若成功获得主机名，则返回一个指针，指向hostinfo */
             if((hostinfo = gethostbyname(name)) != NULL)
             {
                 /** inet_ntoa()函数，将hostinfo结构变量中的h_addr_list转化为标准的点分表示的IP */
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
                 ip = inet_ntoa(*(struct in_addr *)*hostinfo->h_addr_list);
                 return ip;
             }
@@ -158,13 +111,8 @@ char* CheckIP(void)
 }
 
 /**
-<<<<<<< HEAD
-**  ��ȡIP��ַǰ3��
-**  ����ֵ��Status;
-=======
 **  获取IP地址前3段
 **  返回值：Status;
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
 **/
 Status IPhead(char* ip)
 {
@@ -176,21 +124,13 @@ Status IPhead(char* ip)
     strcat(ip,strtok (NULL, "."));
     strcat(ip,".");
 
-<<<<<<< HEAD
-    /** ������ǰ����ip���Ķ���10���ڣ�Ϊ��ֹ����������ǿ�ƴ�***.***.***.1��ʼ��ѯ  **/
-=======
     /** 如果当前主机ip第四段在10以内，为防止减后溢出，强制从***.***.***.1开始查询  **/
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
 
     last = atoi(strtok(NULL,"."));
     if (last > 10)
         last -= 10;
     else
-<<<<<<< HEAD
-        last = 1;    
-=======
         last = 1;
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
 
 
     return OK;
@@ -230,11 +170,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 {
     ThreadEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
     char iphead[16] = "";
-<<<<<<< HEAD
-    IPhead(iphead);/** ��ȡ����IP��ַǰ3��  */
-=======
     IPhead(iphead);/** 获取网关IP地址前3段  */
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
     HANDLE  handle[THREAD_NUM];
     int i;
     for(i = 0; i < THREAD_NUM; i++)
@@ -242,20 +178,6 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
         char tmp[4] = "",ip[16] = "";
         strcat(ip,iphead);
         itoa(last  + i,tmp,10);
-<<<<<<< HEAD
-        strcat(ip,tmp);/** ƴ����IP��ַ����һ�� */
-
-        /** ��THREAD_NUM���߳̽���ɨ��  */
-        handle[i] = (HANDLE)_beginthreadex(NULL,0,thread_func,ip,0,NULL);
-        WaitForSingleObject(ThreadEvent, INFINITE); /** �ȴ��¼�������  */
-    }
-    WaitForMultipleObjects(THREAD_NUM, handle, TRUE,INFINITE);
-    CloseHandle(ThreadEvent);/** �����¼�  */
-    if(0 == flag)
-    {
-        char notfound[] = "�밴���淽�����飺\n\n\t1, �ֻ��͵��� ����ͬһ��·����\n\t2, ����С���ֻ� -> �ļ����� -> Զ�̹��� -> ��������";
-        MessageBox(NULL,notfound,TEXT("û���ҵ�С���ֻ���"),MB_OK|MB_ICONWARNING);
-=======
         strcat(ip,tmp);/** 拼接上IP地址最后一段 */
 
         /** 开THREAD_NUM个线程进行扫描  */
@@ -268,7 +190,6 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     {
         char notfound[] = "请按下面方法检查：\n\n\t1, 手机和电脑 连接同一个路由器\n\t2, 打开小米手机 -> 文件管理 -> 远程管理 -> 启动服务";
         MessageBox(NULL,notfound,TEXT("没有找到小米手机！"),MB_OK|MB_ICONWARNING);
->>>>>>> 98246ecd439b00baaf3e66179038f80285d4183f
     }
     return 0;
 }
